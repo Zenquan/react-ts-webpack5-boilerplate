@@ -32,7 +32,12 @@ module.exports = {
     port: 5000,
     hot: true,
     proxy: {
-
+      '/api/activity': {
+        target: 'http://h5-activity.dubbox.test.thejoyrun.com',
+        pathRewrite: { '^/api/activity': '', },
+        secure: false,
+        changeOrigin: true,
+      },
     },
     inline: true,
 	  historyApiFallback: true
