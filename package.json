@@ -21,13 +21,11 @@
     "@types/history": "^4.7.8",
     "@types/react": "^17.0.6",
     "@types/react-dom": "^17.0.5",
-    "@types/react-loadable": "^5.5.5",
     "@types/react-router-dom": "^4.3.1",
     "@typescript-eslint/eslint-plugin": "^4.25.0",
     "@typescript-eslint/parser": "^4.25.0",
     "babel-loader": "^8.2.2",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
-    "babel-plugin-zent": "^2.2.2",
     "cache-loader": "^4.1.0",
     "css-loader": "^5.2.5",
     "eslint": "^7.27.0",
@@ -39,21 +37,20 @@
     "postcss-cssnext": "^3.1.0",
     "postcss-loader": "^5.3.0",
     "postcss-preset-env": "^6.7.0",
-    "react-router-dom": "^4.3.1",
     "style-loader": "^2.0.0",
     "stylelint": "^13.13.1",
     "stylelint-config-standard": "^22.0.0",
     "ts-loader": "^9.2.2",
     "typescript": "^4.2.4",
+    "url-loader": "^4.1.1",
     "webpack": "^5.37.1",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.7.0",
     "webpack-dev-server": "^3.11.2",
-    "webpack-merge": "^5.7.3"
+    "webpack-merge": "^5.7.3",
+    "webpackbar": "^5.0.0-3"
   },
   "dependencies": {
-    "@tiptap/react": "^2.0.0-beta.42",
-    "@tiptap/starter-kit": "^2.0.0-beta.65",
     "history": "^4.10.1",
     "mobx": "^6.3.2",
     "mobx-react": "^7.2.0",
@@ -61,8 +58,6 @@
     "number-random": "^1.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-loadable": "^5.5.0",
-    "swr": "^0.5.6",
-    "zent": "^9.5.0"
+    "react-router-dom": "^5.2.0"
   }
 }

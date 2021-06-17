@@ -7,6 +7,8 @@
 </head>
 <body>
     <div id="root"></div>
-    <script src="../lib/dll_react.js"></script>
+    <% if (htmlWebpackPlugin.options.env != 'development') { %>
+      <script type="text/javascript" src='<%=htmlWebpackPlugin.options.vendor%>'></script>
+    <% } %>
 </body>
 </html>

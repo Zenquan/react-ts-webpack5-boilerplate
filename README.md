@@ -8,5 +8,4 @@
 
 ## TODO
 - [ ] pwa
-- [ ] webapck dll
-- [ ] web workers
+- [x] webapck dll

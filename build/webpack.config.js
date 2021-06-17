@@ -1,9 +1,9 @@
-const { resolve } = require('./utils'),
+const { resolve, isProd } = require('./utils'),
   { loaders } = require('./loaders'),
-  { plugins } = require('./plugins')
+  { plugins } = require('./plugins'),
+  portfinder = require('portfinder');
 
-module.exports = {
-  devtool: "inline-source-map",
+const baseConfig = {
   entry: {
     app: "./src/index.tsx"
   },
@@ -26,10 +26,15 @@ module.exports = {
   module: {
     rules: loaders
   },
+  target: "web",
+};
+
+const devConfig = Object.assign(baseConfig, {
+  devtool: "inline-source-map",
   devServer: {
     contentBase: './dist',
     host: '127.0.0.1',
-    port: 5000,
+    port: process.env.PORT || 5000,
     hot: true,
     proxy: {
       '/api/activity': {
@@ -40,12 +45,14 @@ module.exports = {
       },
     },
     inline: true,
-	  historyApiFallback: true
+    historyApiFallback: true
   },
   watchOptions: {
     ignored: 'node_modules/**'
   },
-  target: "web",
+});
+
+const prodConfig = Object.assign(baseConfig, {
   optimization: {
     splitChunks: {
       chunks: 'async',
@@ -69,4 +76,18 @@ module.exports = {
       },
     },
   },
-}
+});
+
+module.exports = new Promise((resolve, reject) =>  {
+  portfinder.getPort((err, port) => {
+    if(err){
+      reject(err);
+      return;
+    }
+
+    //端口被占用时就重新设置evn和devServer的端口
+    devConfig.devServer.port = process.env.PORT = port;
+
+    resolve(isProd ? prodConfig : devConfig);
+  });
+});
