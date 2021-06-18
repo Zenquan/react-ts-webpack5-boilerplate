@@ -1,4 +1,4 @@
-# react-ts-webpack5-tpl
+# react-ts-webpack5-template
 
 ## 技术栈
 

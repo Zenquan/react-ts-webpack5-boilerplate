@@ -1,7 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { Router, Switch, Route } from "react-router-dom";
 import { history } from 'utils';
-import { Loading } from "./components/loading";
 import random from 'number-random';
 
 const routes: Array<{component: any, path?: string}> = [
@@ -21,7 +20,6 @@ export default function AppRouter() {
     <Router history={history}>
       <Suspense fallback={
         <>
-          <Loading />
           222
         </>
       }>
