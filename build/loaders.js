@@ -20,6 +20,17 @@ const loaders = [
       }, 'postcss-loader'],
   },
   {
+    test: /\.less$/i,
+    use: ['style-loader', {
+      loader: 'css-loader',
+      options: {
+        importLoaders: 1,
+      },
+    }, {
+      loader: 'less-loader'
+    }, 'postcss-loader'],
+  },
+  {
     test: /\.(png|jpe?g|gif|svg)$/i,
     use: [
       {

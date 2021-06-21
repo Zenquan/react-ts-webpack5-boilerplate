@@ -1,7 +1,6 @@
 import React, { Suspense, lazy } from "react";
 import { Router, Switch, Route } from "react-router-dom";
 import { history } from 'utils';
-import { BlockLoading } from 'zent';
 import random from 'number-random';
 
 const routes: Array<{component: any, path?: string}> = [
@@ -20,8 +19,9 @@ export default function AppRouter() {
   return (
     <Router history={history}>
       <Suspense fallback={
-        <BlockLoading loading icon="circle"
-          iconSize={64} iconText="加载中" />
+        <>
+          222
+        </>
       }>
         <Switch>
           {routes &&

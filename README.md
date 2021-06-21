@@ -1,5 +1,11 @@
-# react-ts-webpack5-tpl
+# react-ts-webpack5-template
+
+## 技术栈
+
+- react
+- typescript
+- webpack5
 
 ## TODO
 - [ ] pwa
-- [ ] webapck dll
+- [x] webapck dll
