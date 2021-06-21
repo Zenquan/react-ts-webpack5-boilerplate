@@ -11,7 +11,7 @@ const Home: FC = () => {
 
   return (
     <div className="home">
-      111
+      Hello, React!
     </div>
   );
 };
