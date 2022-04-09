@@ -1,11 +1,13 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const swcConfig = require('./.swcrc');
+const { isProd } = require('./utils');
 
 const loaders = [
-  {
-    test: /\.(js|jsx)$/,
-    use: ['cache-loader', 'babel-loader'],
-    exclude: /node_modules/,
-  },
+  // {
+  //   test: /\.(js|jsx)$/,
+  //   use: ['cache-loader', 'babel-loader'],
+  //   exclude: /node_modules/,
+  // },
   {
     test: /\.css$/,
     use: [
@@ -64,14 +66,20 @@ const loaders = [
     test: /\.svg$/,
     use: 'file-loader',
   },
-  {
-    test: /\.ts(x)?$/,
-    loader: 'ts-loader',
-    exclude: /node_modules/,
-  },
+  // {
+  //   test: /\.ts(x)?$/,
+  //   loader: 'ts-loader',
+  //   exclude: /node_modules/,
+  // },
   {
     test: /\.less$/,
     use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
+  },
+  {
+    test: /\.(js|jsx|ts|tsx)$/,
+    loader: 'swc-loader',
+    options: swcConfig(!isProd),
+    exclude: /node_modules/,
   },
 ];
 

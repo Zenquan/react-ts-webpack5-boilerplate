@@ -2,6 +2,8 @@ const { resolve, isProd } = require('./utils');
 const { loaders } = require('./loaders');
 const { plugins } = require('./plugins');
 const portfinder = require('portfinder');
+const esbuild = require('esbuild');
+const { ESBuildMinifyPlugin } = require('esbuild-loader');
 
 const baseConfig = {
   entry: ['react-hot-loader/patch', resolve('src/index.tsx')],
@@ -83,6 +85,14 @@ const prodConfig = Object.assign(baseConfig, {
         },
       },
     },
+    minimizer: [
+      new ESBuildMinifyPlugin({
+        target: 'es2015',
+        legalComments: 'none', // 去除注释
+        css: true, // 压缩 css
+        implementation: esbuild, // 自定义 esbuild instance 实现
+      }),
+    ],
   },
 });
 
