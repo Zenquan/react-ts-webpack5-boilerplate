@@ -11,7 +11,7 @@
     "lint:eslint": "eslint -c .eslintrc.js --ext .ts,.tsx,.js src",
     "lint:stylelint": "stylelint --config .stylelintrc.js src/**/*.{less,css,scss}",
     "lint": "run-p lint:eslint lint:stylelint",
-    "lint:lint-staged": "lint-staged -c ./.husky/lintstagedrc.js",
+    "lint:lint-staged": "#lint-staged -c ./.husky/lintstagedrc.js",
     "dll-build:dev": "webpack --mode=development --config ./build/webpack.dll.js",
     "dll-build:prod": "webpack --mode=production --config ./build/webpack.dll.js"
   },
