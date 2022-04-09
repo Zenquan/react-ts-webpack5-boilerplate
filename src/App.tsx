@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { hot } from 'react-hot-loader/root';
-import './App.css';
+// import './App.css';
 import AppRouter from './router';
 
 const App: FC = () => {

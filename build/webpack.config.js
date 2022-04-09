@@ -1,58 +1,66 @@
-const { resolve, isProd } = require('./utils'),
-  { loaders } = require('./loaders'),
-  { plugins } = require('./plugins'),
-  portfinder = require('portfinder');
+const { resolve, isProd } = require('./utils');
+const { loaders } = require('./loaders');
+const { plugins } = require('./plugins');
+const portfinder = require('portfinder');
 
 const baseConfig = {
-  entry: {
-    app: "./src/index.tsx"
-  },
+  entry: ['react-hot-loader/patch', resolve('src/index.tsx')],
   output: {
     path: resolve('dist'),
-    filename: "[name].[chunkhash:8].js",
-    clean: true
+    filename: 'assets/js/[name].[contenthash:5].js',
+    clean: true,
   },
   resolve: {
-    extensions: [".js", ".jsx", ".ts", ".tsx"],
+    extensions: ['.tsx', '.ts', 'less', '.css', '.jsx', '.js'],
     alias: {
-      '@': resolve('src'),
-      'pages': resolve('src/pages'),
-      'utils': resolve('src/utils'),
-      'services': resolve('src/services'),
-      'stores': resolve('src/stores')
+      '/@': resolve('src'),
     },
   },
   plugins,
   module: {
-    rules: loaders
+    rules: loaders,
   },
-  target: "web",
+  target: 'web',
 };
 
 const devConfig = Object.assign(baseConfig, {
-  devtool: "inline-source-map",
+  devtool: 'inline-source-map',
+  output: {
+    filename: '[name].[hash].js',
+  },
   devServer: {
     contentBase: './dist',
     host: '127.0.0.1',
     port: process.env.PORT || 5000,
     hot: true,
     proxy: {
-      '/api/activity': {
-        target: 'http://h5-activity.dubbox.test.thejoyrun.com',
-        pathRewrite: { '^/api/activity': '', },
+      '/api': {
+        target: 'http://localhost:3000',
+        pathRewrite: { '^/api': '' },
         secure: false,
         changeOrigin: true,
       },
     },
     inline: true,
-    historyApiFallback: true
+    historyApiFallback: true,
   },
   watchOptions: {
-    ignored: 'node_modules/**'
+    ignored: 'node_modules/**',
   },
 });
 
 const prodConfig = Object.assign(baseConfig, {
+  /* CDN http://www.staticfile.org/
+    https://cdnjs.com/
+    https://www.jsdelivr.com/
+    */
+  externals: [
+    // {
+    //   'react': 'React',
+    //   'react-dom': 'ReactDOM',
+    //   'react-router-dom': 'ReactRouterDOM',
+    // }
+  ],
   optimization: {
     splitChunks: {
       chunks: 'async',
@@ -78,9 +86,9 @@ const prodConfig = Object.assign(baseConfig, {
   },
 });
 
-module.exports = new Promise((resolve, reject) =>  {
+module.exports = new Promise((resolve, reject) => {
   portfinder.getPort((err, port) => {
-    if(err){
+    if (err) {
       reject(err);
       return;
     }

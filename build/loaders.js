@@ -1,75 +1,80 @@
-const { resolve } = require('./utils')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const loaders = [
   {
-    test:  /\.(js|jsx|ts|tsx)$/,
-    include: [resolve("src")],
+    test: /\.(js|jsx)$/,
+    use: ['cache-loader', 'babel-loader'],
     exclude: /node_modules/,
-    use: [
-      'cache-loader',
-      "babel-loader"
-    ],
   },
   {
-    test: /\.(scss|css)$/,
-    use: ['style-loader', {
+    test: /\.css$/,
+    use: [
+      MiniCssExtractPlugin.loader,
+      {
         loader: 'css-loader',
         options: {
           importLoaders: 1,
         },
-      }, 'postcss-loader'],
-  },
-  {
-    test: /\.less$/i,
-    use: ['style-loader', {
-      loader: 'css-loader',
-      options: {
-        importLoaders: 1,
       },
-    }, {
-      loader: 'less-loader'
-    }, 'postcss-loader'],
+      'postcss-loader',
+    ],
+    exclude: /\.module\.css$/,
   },
   {
-    test: /\.(png|jpe?g|gif|svg)$/i,
+    test: /\.css$/,
+    use: [
+      MiniCssExtractPlugin.loader,
+      {
+        loader: 'css-loader',
+        options: {
+          importLoaders: 1,
+          modules: true,
+        },
+      },
+      'postcss-loader',
+    ],
+    include: /\.module\.css$/,
+  },
+  {
+    test: /\.(png|jpeg|jpg|bmp|gif)$/,
     use: [
       {
         loader: 'url-loader',
         options: {
-          limit: 1024 * 200,
-        }
-      }
-    ]
+          limit: 10 * 1024,
+          name: '[name].[contenthash:8].[ext]',
+          outputPath: 'assets/images',
+        },
+      },
+    ],
   },
   {
-    test: /\.(woff2?|eot|ttf|otf)$/,
+    test: /\.(ttf|woff|woff2|eot|otf)$/,
     use: [
       {
         loader: 'url-loader',
         options: {
-          limit: 1024 * 200,
-        }
-      }
-    ]
+          name: '[name].[contenthash:8].[ext]',
+          outputPath: 'assets/fonts',
+        },
+      },
+    ],
   },
   {
-    test: /\.(ogg|mp3|wav|mpe?g)$/i,
-    use: [
-      {
-        loader: 'url-loader',
-        options: {
-          limit: 1024 * 200,
-        }
-      }
-    ]
+    test: /\.svg$/,
+    use: 'file-loader',
   },
   {
-    test: /\.(ts|tsx)?$/,
-    use: 'ts-loader',
+    test: /\.ts(x)?$/,
+    loader: 'ts-loader',
     exclude: /node_modules/,
-  }
-]
+  },
+  {
+    test: /\.less$/,
+    use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
+  },
+];
 
 module.exports = {
-  loaders
-}
+  loaders,
+};
