@@ -1,13 +1,8 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const swcConfig = require('./.swcrc');
-const { isProd } = require('./utils');
+const { isProd, resolve } = require('./utils');
 
 const loaders = [
-  // {
-  //   test: /\.(js|jsx)$/,
-  //   use: ['cache-loader', 'babel-loader'],
-  //   exclude: /node_modules/,
-  // },
   {
     test: /\.css$/,
     use: [
@@ -56,6 +51,7 @@ const loaders = [
       {
         loader: 'url-loader',
         options: {
+          limit: 200 * 1024,
           name: '[name].[contenthash:8].[ext]',
           outputPath: 'assets/fonts',
         },
@@ -63,23 +59,31 @@ const loaders = [
     ],
   },
   {
+    test: /\.(ogg|mp3|wav|mpe?g)$/i,
+    loader: 'url-loader',
+    query: {
+      limit: 1024 * 200,
+      name: 'assets/media/[name].[ext]',
+    },
+  },
+  {
     test: /\.svg$/,
     use: 'file-loader',
   },
-  // {
-  //   test: /\.ts(x)?$/,
-  //   loader: 'ts-loader',
-  //   exclude: /node_modules/,
-  // },
   {
     test: /\.less$/,
     use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
   },
   {
     test: /\.(js|jsx|ts|tsx)$/,
-    loader: 'swc-loader',
-    options: swcConfig(!isProd),
+    use: [
+      {
+        loader: 'swc-loader',
+        options: swcConfig(!isProd),
+      },
+    ],
     exclude: /node_modules/,
+    include: [resolve('src')],
   },
 ];
 
