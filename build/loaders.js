@@ -103,8 +103,8 @@ const loaders = [
   {
     test: /\.(ogg|mp3|wav|mpe?g)$/i,
     loader: 'url-loader',
-    query: {
-      limit: 1024 * 200,
+    options: {
+      limit: 200 * 1024,
       name: 'assets/media/[name].[ext]',
     },
   },
