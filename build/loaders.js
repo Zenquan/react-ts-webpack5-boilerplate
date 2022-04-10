@@ -93,11 +93,20 @@ const loaders = [
       {
         loader: 'url-loader',
         options: {
+          limit: 10 * 1024,
           name: '[name].[contenthash:8].[ext]',
           outputPath: 'assets/fonts',
         },
       },
     ],
+  },
+  {
+    test: /\.(ogg|mp3|wav|mpe?g)$/i,
+    loader: 'url-loader',
+    query: {
+      limit: 1024 * 200,
+      name: 'assets/media/[name].[ext]',
+    },
   },
   {
     test: /\.svg$/,
