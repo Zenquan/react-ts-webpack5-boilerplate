@@ -33,7 +33,7 @@ const loaders = [
     include: /\.module\.css$/,
   },
   {
-    test: /\.(png|jpeg|jpg|bmp|gif)$/,
+    test: /\.(png|jpeg|jpg|bmp|gif|svg)$/,
     use: [
       {
         loader: 'url-loader',
@@ -65,10 +65,6 @@ const loaders = [
       limit: 200 * 1024,
       name: 'assets/media/[name].[ext]',
     },
-  },
-  {
-    test: /\.svg$/,
-    use: 'file-loader',
   },
   {
     test: /\.less$/,

@@ -1,44 +1,18 @@
-import React, { Suspense, lazy } from "react";
-import { Router, Switch, Route } from "react-router-dom";
-import { history } from "/@/utils";
-import random from "number-random";
+import React, { lazy } from 'react';
+import { RouteComponentProps } from 'react-router-dom';
+import { StaticContext } from 'react-router';
 
-const routes: Array<{ component: any; path?: string }> = [
+export const routes: Array<{
+  component:
+    | React.ComponentType<any>
+    | React.ComponentType<RouteComponentProps<any, StaticContext, unknown>>;
+  path?: string;
+}> = [
   {
-    component: lazy(
-      () => import(/* webpackChunkName: "home" */ "./pages/Home")
-    ),
-    path: "/",
+    component: lazy(() => import(/* webpackChunkName: "home" */ './pages/home-page')),
+    path: '/',
   },
   {
-    component: lazy(
-      () => import(/* webpackChunkName: "not-found" */ "./pages/NotFound")
-    ),
+    component: lazy(() => import(/* webpackChunkName: "not-found" */ './pages/not-found')),
   },
 ];
-
-export default function AppRouter() {
-  return (
-    <Router history={history}>
-      <Suspense fallback={<>222</>}>
-        <Switch>
-          {routes &&
-            routes.map(
-              (route: { component: any; path?: string }, index: number) => {
-                const key = random(100, 999),
-                  { component, path } = route;
-                return (
-                  <Route
-                    path={path}
-                    key={key}
-                    exact={!index ? true : false}
-                    component={component}
-                  ></Route>
-                );
-              }
-            )}
-        </Switch>
-      </Suspense>
-    </Router>
-  );
-}

@@ -16,6 +16,7 @@ const baseConfig = {
     extensions: ['.tsx', '.ts', 'less', '.css', '.jsx', '.js'],
     alias: {
       '/@': resolve('src'),
+      '@': resolve('src'),
     },
   },
   plugins,
@@ -31,9 +32,7 @@ const devConfig = Object.assign(baseConfig, {
     filename: '[name].[hash].js',
   },
   devServer: {
-    contentBase: './dist',
-    host: '127.0.0.1',
-    port: process.env.PORT || 5000,
+    https: true,
     hot: true,
     proxy: {
       '/api': {
