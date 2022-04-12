@@ -4,7 +4,7 @@ const { plugins } = require('./plugins');
 const portfinder = require('portfinder');
 
 const baseConfig = {
-  entry: ['react-hot-loader/patch', resolve('src/index.tsx')],
+  entry: ['react-hot-loader/patch', resolve('src/main.tsx')],
   output: {
     path: resolve('dist'),
     filename: 'assets/js/[name].[contenthash:5].js',

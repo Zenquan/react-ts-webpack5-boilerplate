@@ -1,14 +1,26 @@
-import React, { FC } from 'react';
-import { hot } from 'react-hot-loader/root';
-// import './App.css';
-import AppRouter from './router';
+import React, { Suspense } from 'react';
+import { Route, Switch, Router } from 'react-router-dom';
+import { createBrowserHistory } from 'history';
 
-const App: FC = () => {
+import './App.css';
+import { routes } from './router';
+
+const history = createBrowserHistory();
+
+function App() {
   return (
-    <div className="App">
-      <AppRouter />
-    </div>
+    <Router history={history}>
+      <Suspense fallback={<div className="loading">loading...</div>}>
+        <Switch>
+          {routes &&
+            routes.map((route: any, index: number) => {
+              const { path, component } = route;
+              return <Route path={path} component={component} key={index} />;
+            })}
+        </Switch>
+      </Suspense>
+    </Router>
   );
-};
+}
 
-export default hot(App);
+export default App;
