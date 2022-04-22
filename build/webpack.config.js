@@ -11,7 +11,7 @@ const baseConfig = {
     clean: true,
   },
   resolve: {
-    extensions: ['.tsx', '.ts', 'less', '.css', '.jsx', '.js'],
+    extensions: ['.tsx', '.ts', '.css', 'less', '.jsx', '.js'],
     alias: {
       '/@': resolve('src'),
     },
