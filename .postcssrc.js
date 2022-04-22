@@ -6,7 +6,7 @@ module.exports = {
      * ignore注释不生效参考
      * https://github.com/evrone/postcss-px-to-viewport/issues/72
      */
-    'postcss-px-to-viewport': {
+    '@tcstory/postcss-px-to-viewport': {
       viewportWidth: 375,
       propList: ['*'],
       unitPrecision: 3, // 指定`px`转换为视窗单位值的小数位数（很多时候无法整除）
