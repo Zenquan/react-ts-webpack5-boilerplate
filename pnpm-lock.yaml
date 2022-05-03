@@ -6,10 +6,11 @@ specifiers:
   '@babel/preset-react': ^7.13.13
   '@commitlint/cli': ^16.2.3
   '@swc/core': ^1.2.165
-  '@types/history': ^4.7.8
-  '@types/react': ^17.0.44
+  '@tcstory/postcss-px-to-viewport': ^0.3.0
+  '@types/history': ^5.0.0
+  '@types/react': ^18.0.1
   '@types/react-dom': ^17.0.15
-  '@types/react-router-dom': ^4.3.5
+  '@types/react-router-dom': ^5.3.3
   '@typescript-eslint/eslint-plugin': ^4.25.0
   '@typescript-eslint/parser': ^4.25.0
   autoprefixer: ^10.4.4
@@ -40,12 +41,12 @@ specifiers:
   postcss: ^8.3.0
   postcss-less: ^6.0.0
   postcss-loader: ^5.3.0
-  postcss-px-to-viewport: ^1.1.1
   prettier: ^2.6.2
   react: ^17.0.2
   react-dom: ^17.0.2
   react-hot-loader: ^4.13.0
   react-router-dom: ^5.2.0
+  rimraf: ^3.0.2
   style-loader: ^2.0.0
   stylelint: ^13.13.1
   stylelint-config-prettier: ^9.0.3
@@ -77,10 +78,11 @@ devDependencies:
   '@babel/preset-react': 7.16.7_@babel+core@7.17.9
   '@commitlint/cli': 16.2.3_@swc+core@1.2.165
   '@swc/core': 1.2.165
-  '@types/history': 4.7.11
-  '@types/react': 17.0.44
+  '@tcstory/postcss-px-to-viewport': 0.3.0_postcss@8.4.12
+  '@types/history': 5.0.0
+  '@types/react': 18.0.8
   '@types/react-dom': 17.0.15
-  '@types/react-router-dom': 4.3.5
+  '@types/react-router-dom': 5.3.3
   '@typescript-eslint/eslint-plugin': 4.33.0_358948be449a8453c3ac1f9f3c6bfa76
   '@typescript-eslint/parser': 4.33.0_eslint@8.13.0+typescript@4.6.3
   autoprefixer: 10.4.4_postcss@8.4.12
@@ -107,9 +109,9 @@ devDependencies:
   postcss: 8.4.12
   postcss-less: 6.0.0_postcss@8.4.12
   postcss-loader: 5.3.0_postcss@8.4.12+webpack@5.72.0
-  postcss-px-to-viewport: 1.1.1
   prettier: 2.6.2
-  react-hot-loader: 4.13.0_b49bddbe4b905ced4713cb857cca91fa
+  react-hot-loader: 4.13.0_daeb7318e0745db8ebd9bf57131bb72b
+  rimraf: 3.0.2
   style-loader: 2.0.0_webpack@5.72.0
   stylelint: 13.13.1
   stylelint-config-prettier: 9.0.3_stylelint@13.13.1
@@ -1728,6 +1730,15 @@ packages:
       '@swc/core-win32-x64-msvc': 1.2.165
     dev: true
 
+  /@tcstory/postcss-px-to-viewport/0.3.0_postcss@8.4.12:
+    resolution: {integrity: sha512-IARhkb0F5dvfxn6RRfBcMIy68AwLsBrjyyJi9NepqtX1RYj31GH3Xd/S5DGYx15AzkalMwNP9LK1TxkTiSb/ig==}
+    engines: {node: '>=16.0.0'}
+    peerDependencies:
+      postcss: ^8.3.0
+    dependencies:
+      postcss: 8.4.12
+    dev: true
+
   /@tsconfig/node10/1.0.8:
     resolution: {integrity: sha512-6XFfSQmMgq0CFLY1MslA/CPUfhIL919M1rMsa5lP2P097N2Wd1sSX0tx1u4olM16fLNhtHZpRhedZJphNJqmZg==}
     dev: true
@@ -1771,6 +1782,13 @@ packages:
 
   /@types/history/4.7.11:
     resolution: {integrity: sha512-qjDJRrmvBMiTx+jyLxvLfJU7UznFuokDv4f3WRuriHKERccVpFU+8XMQUAbDzoiJCsmexxRExQeMwwCdamSKDA==}
+    dev: true
+
+  /@types/history/5.0.0:
+    resolution: {integrity: sha512-hy8b7Y1J8OGe6LbAjj3xniQrj3v6lsivCcrmf4TzSgPzLkhIeKgc5IZnT7ReIqmEuodjfO8EYAuoFvIrHi/+jQ==}
+    deprecated: This is a stub types definition. history provides its own type definitions, so you do not need this installed.
+    dependencies:
+      history: 4.10.1
     dev: true
 
   /@types/html-minifier-terser/6.1.0:
@@ -1817,11 +1835,11 @@ packages:
       '@types/react': 17.0.44
     dev: true
 
-  /@types/react-router-dom/4.3.5:
-    resolution: {integrity: sha512-eFajSUASYbPHg2BDM1G8Btx+YqGgvROPIg6sBhl3O4kbDdYXdFdfrgQFf/pcBuQVObjfT9AL/dd15jilR5DIEA==}
+  /@types/react-router-dom/5.3.3:
+    resolution: {integrity: sha512-kpqnYK4wcdm5UaWI3fLcELopqLrHgLqNsdpHauzlQktfkHL3npOSwtj1Uz9oKBAzs7lFtVkV8j83voAz2D8fhw==}
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 17.0.44
+      '@types/react': 18.0.8
       '@types/react-router': 5.1.18
     dev: true
 
@@ -1829,11 +1847,19 @@ packages:
     resolution: {integrity: sha512-YYknwy0D0iOwKQgz9v8nOzt2J6l4gouBmDnWqUUznltOTaon+r8US8ky8HvN0tXvc38U9m6z/t2RsVsnd1zM0g==}
     dependencies:
       '@types/history': 4.7.11
-      '@types/react': 17.0.44
+      '@types/react': 18.0.8
     dev: true
 
   /@types/react/17.0.44:
     resolution: {integrity: sha512-Ye0nlw09GeMp2Suh8qoOv0odfgCoowfM/9MG6WeRD60Gq9wS90bdkdRtYbRkNhXOpG4H+YXGvj4wOWhAC0LJ1g==}
+    dependencies:
+      '@types/prop-types': 15.7.5
+      '@types/scheduler': 0.16.2
+      csstype: 3.0.11
+    dev: true
+
+  /@types/react/18.0.8:
+    resolution: {integrity: sha512-+j2hk9BzCOrrOSJASi5XiOyBbERk9jG5O73Ya4M0env5Ixi6vUNli4qy994AINcEF+1IEHISYFfIT4zwr++LKw==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
@@ -4563,7 +4589,6 @@ packages:
       tiny-invariant: 1.2.0
       tiny-warning: 1.0.3
       value-equal: 1.0.1
-    dev: false
 
   /hoist-non-react-statics/3.3.2:
     resolution: {integrity: sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==}
@@ -6532,13 +6557,6 @@ packages:
       postcss: 8.4.12
     dev: true
 
-  /postcss-px-to-viewport/1.1.1:
-    resolution: {integrity: sha512-2x9oGnBms+e0cYtBJOZdlwrFg/mLR4P1g2IFu7jYKvnqnH/HLhoKyareW2Q/x4sg0BgklHlP1qeWo2oCyPm8FQ==}
-    dependencies:
-      object-assign: 4.1.1
-      postcss: 8.4.12
-    dev: true
-
   /postcss-resolve-nested-selector/0.1.1:
     resolution: {integrity: sha512-HvExULSwLqHLgUy1rl3ANIqCsvMS0WHss2UOsXhXnQaZ9VCc2oBvIpXrl00IUFT5ZDITME0o6oiXeiHr2SAIfw==}
     dev: true
@@ -6744,7 +6762,7 @@ packages:
       scheduler: 0.20.2
     dev: false
 
-  /react-hot-loader/4.13.0_b49bddbe4b905ced4713cb857cca91fa:
+  /react-hot-loader/4.13.0_daeb7318e0745db8ebd9bf57131bb72b:
     resolution: {integrity: sha512-JrLlvUPqh6wIkrK2hZDfOyq/Uh/WeVEr8nc7hkn2/3Ul0sx1Kr5y4kOGNacNRoj7RhwLNcQ3Udf1KJXrqc0ZtA==}
     engines: {node: '>= 6'}
     peerDependencies:
@@ -6755,7 +6773,7 @@ packages:
       '@types/react':
         optional: true
     dependencies:
-      '@types/react': 17.0.44
+      '@types/react': 18.0.8
       fast-levenshtein: 2.0.6
       global: 4.4.0
       hoist-non-react-statics: 3.3.2
@@ -7062,7 +7080,6 @@ packages:
 
   /resolve-pathname/3.0.0:
     resolution: {integrity: sha512-C7rARubxI8bXFNB/hqcp/4iUeIXJhJZvFPFPiSPRnhU5UPxzMFIl+2E6yY6c4k9giDJAhtV+enfA+G89N6Csng==}
-    dev: false
 
   /resolve-url/0.2.1:
     resolution: {integrity: sha512-ZuF55hVUQaaczgOIwqWzkEcEidmlD/xl44x1UZnhOXcYuFN2S6+rcxpG+C1N3So0wvNI3DmJICUFfu2SxhBmvg==}
@@ -8010,11 +8027,9 @@ packages:
 
   /tiny-invariant/1.2.0:
     resolution: {integrity: sha512-1Uhn/aqw5C6RI4KejVeTg6mIS7IqxnLJ8Mv2tV5rTc0qWobay7pDUz6Wi392Cnc8ak1H0F2cjoRzb2/AW4+Fvg==}
-    dev: false
 
   /tiny-warning/1.0.3:
     resolution: {integrity: sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==}
-    dev: false
 
   /to-fast-properties/2.0.0:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
@@ -8369,7 +8384,6 @@ packages:
 
   /value-equal/1.0.1:
     resolution: {integrity: sha512-NOJ6JZCAWr0zlxZt+xqCHNTEKOsrks2HQd4MqhP1qy4z1SkbEP467eNx6TgDKXMvUOb+OENfJCZwM+16n7fRfw==}
-    dev: false
 
   /vary/1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
@@ -8636,7 +8650,7 @@ packages:
     dev: true
 
   /which-pm-runs/1.1.0:
-    resolution: {integrity: sha512-SIqZVnlKPt/s5tOArosKIvGC1bwpoj6w5Q3SmimaVOOU8YFsjuMvvZO1MbKCbO8D6VV0XkROC8jrXJNYa1xBDA==, tarball: which-pm-runs/-/which-pm-runs-1.0.0.tgz}
+    resolution: {integrity: sha512-SIqZVnlKPt/s5tOArosKIvGC1bwpoj6w5Q3SmimaVOOU8YFsjuMvvZO1MbKCbO8D6VV0XkROC8jrXJNYa1xBDA==}
     deprecated: '[WARNING] Use 1.0.0 instead of 1.1.0, reason: https://github.com/zkochan/packages/commit/e7af82f03f1afe6086312d80a0fa47eb8d1c6bff'
     dev: true
 
