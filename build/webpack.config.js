@@ -1,9 +1,8 @@
 const { resolve, isProd } = require('./utils');
 const { loaders } = require('./loaders');
 const { plugins } = require('./plugins');
+const { optimization } = require('./optimization');
 const portfinder = require('portfinder');
-const esbuild = require('esbuild');
-const { ESBuildMinifyPlugin } = require('esbuild-loader');
 
 const baseConfig = {
   entry: ['react-hot-loader/patch', resolve('src/index.tsx')],
@@ -19,10 +18,11 @@ const baseConfig = {
       '@': resolve('src'),
     },
   },
-  plugins,
   module: {
     rules: loaders,
   },
+  plugins,
+  optimization,
   target: 'web',
   cache: {
     type: 'filesystem',
@@ -46,9 +46,6 @@ const devConfig = {
   devtool: 'eval-cheap-module-source-map',
   output: {
     filename: '[name].js',
-  },
-  optimization: {
-    runtimeChunk: true,
   },
   devServer: {
     https: true,
@@ -82,27 +79,6 @@ const prodConfig = {
     //   'react-router-dom': 'ReactRouterDOM',
     // }
   ],
-  optimization: {
-    minimize: true,
-    splitChunks: {
-      chunks: 'all',
-      cacheGroups: {
-        react: {
-          name: 'chunk-react',
-          priority: 20,
-          test: /[\\/]node_modules[\\/]_?react(.*)/,
-        },
-      },
-    },
-    minimizer: [
-      new ESBuildMinifyPlugin({
-        target: 'es2015',
-        legalComments: 'none', // 去除注释
-        css: true, // 压缩 css
-        implementation: esbuild, // 自定义 esbuild instance 实现
-      }),
-    ],
-  },
 };
 
 module.exports = new Promise((resolve, reject) => {
