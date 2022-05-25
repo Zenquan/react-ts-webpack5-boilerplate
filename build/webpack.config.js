@@ -27,7 +27,13 @@ const baseConfig = {
 };
 
 const devConfig = Object.assign(baseConfig, {
-  devtool: 'inline-source-map',
+  /**
+   * https://webpack.docschina.org/configuration/devtool/#root
+   * eval: 具有最高性能的开发构建的推荐选择 generated | build: fast rebuild: fastest
+   * eval-cheap-source-map: 开发构建的折衷选择 transformed | build: ok rebuild: fast
+   * eval-cheap-module-source-map: 开发构建的折衷选择 original lines | build: slow rebuild: fast
+   */
+  devtool: 'eval-cheap-module-source-map',
   output: {
     filename: '[name].[hash].js',
   },
@@ -57,10 +63,10 @@ const prodConfig = Object.assign(baseConfig, {
     */
   externals: [
     // {
-    //   'react': 'React',
+    //   react: 'React',
     //   'react-dom': 'ReactDOM',
     //   'react-router-dom': 'ReactRouterDOM',
-    // }
+    // },
   ],
   optimization: {
     splitChunks: {
