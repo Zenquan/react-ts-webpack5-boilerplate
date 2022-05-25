@@ -8,7 +8,7 @@
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
     "dev": "NODE_ENV=development webpack serve --mode=development --config ./build/webpack.config.js",
-    "build": "pnpm clean && NODE_ENV=production webpack --mode=production --config ./build/webpack.config.js",
+    "build": "NODE_ENV=production webpack --mode=production --config ./build/webpack.config.js",
     "lint:eslint": "eslint -c .eslintrc.js --ext .ts,.tsx,.js src",
     "lint:stylelint": "stylelint --config .stylelintrc.js src/**/*.{less,css,scss}",
     "lint": "run-p lint:eslint lint:stylelint",
