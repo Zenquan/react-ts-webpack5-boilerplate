@@ -43,7 +43,7 @@ const prodPlugins = [
   }),
 ];
 
-const plugins = isProd ? basePlugins.concat(prodPlugins) : basePlugins.concat(devPlugins);
+const plugins = basePlugins.concat(isProd ? prodPlugins : devPlugins);
 
 module.exports = {
   plugins,
