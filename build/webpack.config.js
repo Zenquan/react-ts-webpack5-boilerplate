@@ -10,7 +10,7 @@ const baseConfig = {
   output: {
     path: resolve('dist'),
     filename: 'assets/js/[name].[contenthash:5].js',
-    clean: true,
+    chunkFilename: 'assets/js/[name].[contenthash:5].js',
   },
   resolve: {
     extensions: ['.tsx', '.ts', 'less', '.css', '.jsx', '.js'],
@@ -24,9 +24,19 @@ const baseConfig = {
     rules: loaders,
   },
   target: 'web',
+  cache: {
+    type: 'filesystem',
+    cacheDirectory: resolve('.dist_cache'),
+    store: 'pack',
+    buildDependencies: {
+      defaultWebpack: ['webpack/lib/'],
+      config: [__filename],
+    },
+  },
 };
 
-const devConfig = Object.assign(baseConfig, {
+const devConfig = {
+  ...baseConfig,
   /**
    * https://webpack.docschina.org/configuration/devtool/#root
    * eval: 具有最高性能的开发构建的推荐选择 generated | build: fast rebuild: fastest
@@ -35,7 +45,10 @@ const devConfig = Object.assign(baseConfig, {
    */
   devtool: 'eval-cheap-module-source-map',
   output: {
-    filename: '[name].[hash].js',
+    filename: '[name].js',
+  },
+  optimization: {
+    runtimeChunk: true,
   },
   devServer: {
     https: true,
@@ -54,39 +67,30 @@ const devConfig = Object.assign(baseConfig, {
   watchOptions: {
     ignored: 'node_modules/**',
   },
-});
+};
 
-const prodConfig = Object.assign(baseConfig, {
+const prodConfig = {
+  ...baseConfig,
   /* CDN http://www.staticfile.org/
     https://cdnjs.com/
     https://www.jsdelivr.com/
     */
   externals: [
     // {
-    //   react: 'React',
+    //   'react': 'React',
     //   'react-dom': 'ReactDOM',
     //   'react-router-dom': 'ReactRouterDOM',
-    // },
+    // }
   ],
   optimization: {
+    minimize: true,
     splitChunks: {
-      chunks: 'async',
-      minSize: 20000,
-      minRemainingSize: 0,
-      minChunks: 1,
-      maxAsyncRequests: 30,
-      maxInitialRequests: 30,
-      enforceSizeThreshold: 50000,
+      chunks: 'all',
       cacheGroups: {
-        defaultVendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10,
-          reuseExistingChunk: true,
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true,
+        react: {
+          name: 'chunk-react',
+          priority: 20,
+          test: /[\\/]node_modules[\\/]_?react(.*)/,
         },
       },
     },
@@ -99,18 +103,20 @@ const prodConfig = Object.assign(baseConfig, {
       }),
     ],
   },
-});
+};
 
 module.exports = new Promise((resolve, reject) => {
-  portfinder.getPort((err, port) => {
-    if (err) {
-      reject(err);
-      return;
-    }
+  isProd
+    ? resolve(prodConfig)
+    : portfinder.getPort((err, port) => {
+        if (err) {
+          reject(err);
+          return;
+        }
 
-    //端口被占用时就重新设置evn和devServer的端口
-    devConfig.devServer.port = process.env.PORT = port;
+        //端口被占用时就重新设置evn和devServer的端口
+        devConfig.devServer.port = process.env.PORT = port;
 
-    resolve(isProd ? prodConfig : devConfig);
-  });
+        resolve(devConfig);
+      });
 });
