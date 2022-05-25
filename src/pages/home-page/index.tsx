@@ -12,7 +12,7 @@ const Home: FC = () => {
 
   return (
     <div className={style.home}>
-      {/* <img src={logo} alt="" className={style.logo} /> */}
+      <img src={logo} alt="" className={style.logo} />
       <p>Hello, React!</p>
     </div>
   );
