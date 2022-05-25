@@ -2,6 +2,19 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const swcConfig = require('./.swcrc');
 const { isProd, resolve } = require('./utils');
 
+const cssLoader = {
+  loader: 'css-loader',
+  options: {
+    importLoaders: 1,
+    modules: {
+      mode: 'local',
+      auto: true,
+      exportGlobals: true,
+      localIdentName: '[local]--[hash:base64:5]',
+    },
+  },
+};
+
 const loaders = [
   {
     test: /\.css$/,
@@ -19,17 +32,7 @@ const loaders = [
   },
   {
     test: /\.css$/,
-    use: [
-      MiniCssExtractPlugin.loader,
-      {
-        loader: 'css-loader',
-        options: {
-          importLoaders: 1,
-          modules: true,
-        },
-      },
-      'postcss-loader',
-    ],
+    use: [MiniCssExtractPlugin.loader, cssLoader, 'postcss-loader'],
     include: /\.module\.css$/,
   },
   {
@@ -68,7 +71,7 @@ const loaders = [
   },
   {
     test: /\.less$/,
-    use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
+    use: [MiniCssExtractPlugin.loader, cssLoader, 'less-loader'],
   },
   {
     test: /\.(js|jsx|ts|tsx)$/,
