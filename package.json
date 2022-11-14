@@ -68,6 +68,7 @@
     "prettier": "^2.6.2",
     "react-hot-loader": "^4.13.0",
     "rimraf": "^3.0.2",
+    "speed-measure-webpack-plugin": "^1.5.0",
     "style-loader": "^2.0.0",
     "stylelint": "^13.13.1",
     "stylelint-config-prettier": "^9.0.3",

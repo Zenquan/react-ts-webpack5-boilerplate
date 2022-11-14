@@ -6,11 +6,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const WebpackBar = require('webpackbar');
 const { isProd } = require('./utils');
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 
 const basePlugins = [
   new webpack.HotModuleReplacementPlugin(),
   new FriendlyErrorsPlugin(),
   new WebpackBar(),
+  new SpeedMeasurePlugin(),
 ];
 
 const devPlugins = [

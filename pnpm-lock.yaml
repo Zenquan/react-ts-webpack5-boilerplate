@@ -47,6 +47,7 @@ specifiers:
   react-hot-loader: ^4.13.0
   react-router-dom: ^5.2.0
   rimraf: ^3.0.2
+  speed-measure-webpack-plugin: ^1.5.0
   style-loader: ^2.0.0
   stylelint: ^13.13.1
   stylelint-config-prettier: ^9.0.3
@@ -112,6 +113,7 @@ devDependencies:
   prettier: 2.6.2
   react-hot-loader: 4.13.0_daeb7318e0745db8ebd9bf57131bb72b
   rimraf: 3.0.2
+  speed-measure-webpack-plugin: 1.5.0_webpack@5.72.0
   style-loader: 2.0.0_webpack@5.72.0
   stylelint: 13.13.1
   stylelint-config-prettier: 9.0.3_stylelint@13.13.1
@@ -7568,6 +7570,16 @@ packages:
     hasBin: true
     dev: true
 
+  /speed-measure-webpack-plugin/1.5.0_webpack@5.72.0:
+    resolution: {integrity: sha512-Re0wX5CtM6gW7bZA64ONOfEPEhwbiSF/vz6e2GvadjuaPrQcHTQdRGsD8+BE7iUOysXH8tIenkPCQBEcspXsNg==}
+    engines: {node: '>=6.0.0'}
+    peerDependencies:
+      webpack: ^1 || ^2 || ^3 || ^4 || ^5
+    dependencies:
+      chalk: 4.1.2
+      webpack: 5.72.0_3d463090f910d6e3838fac2961602b85
+    dev: true
+
   /split-string/3.1.0:
     resolution: {integrity: sha512-NzNVhJDYpwceVVii8/Hu6DKfD2G+NrQHlS/V/qgv763EYudVwEcMQNxd2lh+0VrUByXN/oJkl5grOhYWvQUYiw==}
     engines: {node: '>=0.10.0'}
@@ -8648,7 +8660,7 @@ packages:
     dev: true
 
   /which-pm-runs/1.1.0:
-    resolution: {integrity: sha512-SIqZVnlKPt/s5tOArosKIvGC1bwpoj6w5Q3SmimaVOOU8YFsjuMvvZO1MbKCbO8D6VV0XkROC8jrXJNYa1xBDA==}
+    resolution: {integrity: sha512-SIqZVnlKPt/s5tOArosKIvGC1bwpoj6w5Q3SmimaVOOU8YFsjuMvvZO1MbKCbO8D6VV0XkROC8jrXJNYa1xBDA==, tarball: which-pm-runs/-/which-pm-runs-1.1.0.tgz}
     deprecated: '[WARNING] Use 1.0.0 instead of 1.1.0, reason: https://github.com/zkochan/packages/commit/e7af82f03f1afe6086312d80a0fa47eb8d1c6bff'
     dev: true
 
