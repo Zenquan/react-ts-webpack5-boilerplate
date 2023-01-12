@@ -1,6 +1,8 @@
 const esbuild = require('esbuild');
 const { ESBuildMinifyPlugin } = require('esbuild-loader');
 const { isProd } = require('./utils');
+const { LightningCssMinifyPlugin } = require('lightningcss-loader')
+const LightningCSS = require('lightningcss')
 
 const devOptimization = {
   runtimeChunk: true,
@@ -25,6 +27,10 @@ const prodOptimization = {
       css: true, // 压缩 css
       implementation: esbuild, // 自定义 esbuild instance 实现
     }),
+    new LightningCssMinifyPlugin({
+      implementation: LightningCSS
+      // ... lightningcss options
+    })
   ],
 };
 

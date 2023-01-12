@@ -1,6 +1,8 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const swcConfig = require('./.swcrc');
 const { isProd, resolve } = require('./utils');
+const { LightningCssMinifyPlugin } = require('lightningcss-loader')
+const LightningCSS = require('lightningcss')
 
 const cssLoader = {
   loader: 'css-loader',
@@ -26,13 +28,26 @@ const loaders = [
           importLoaders: 1,
         },
       },
-      'postcss-loader',
+      {
+        loader: 'lightningcss-loader',
+        options: {
+          implementation: LightningCSS
+        }
+      }
     ],
     exclude: /\.module\.css$/,
   },
   {
     test: /\.css$/,
-    use: [MiniCssExtractPlugin.loader, cssLoader, 'postcss-loader'],
+    use: [
+      MiniCssExtractPlugin.loader,
+      cssLoader,
+      {
+        loader: 'lightningcss-loader',
+        options: {
+          implementation: LightningCSS
+        }
+      }],
     include: /\.module\.css$/,
   },
   {
