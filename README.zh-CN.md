@@ -1,5 +1,7 @@
 # react-ts-webpack5-boilerplate
 
+[English Doc](./README.md) · [中文文档](./README.zh-CN.md)
+
 使用 react17、webpack5、axios、typescript 构建模板，高性能、兼容性好、优先支持移动端
 
 ## 技术栈

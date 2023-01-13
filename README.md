@@ -1,5 +1,7 @@
 # react-ts-webpack5-boilerplate
 
+[English Doc](./README.md) · [中文文档](./README.zh-CN.md)
+
 Use react17, webpack5, axios, typescript to build templates, high performance, good compatibility, priority support for mobile terminals
 
 ## Technology stack
