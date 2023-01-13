@@ -14,7 +14,6 @@ const Home: FC = () => {
     <div className={style.home}>
       <img src={logo} alt="" className={style.logo} />
       <p>Hello, React!</p>
-      <button onClick={() => methodDoesNotExist()}>Break the world</button>;
     </div>
   );
 };
