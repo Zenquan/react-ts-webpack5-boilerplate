@@ -9,6 +9,9 @@
 - webpack5
 - swc / swc-loader
 - esbuild / esbuild-loader
+- css modules
+- less
+- postcss
 
 ## 性能评分
 

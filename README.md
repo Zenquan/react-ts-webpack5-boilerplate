@@ -9,6 +9,9 @@ Use react17, webpack5, axios, typescript to build templates, high performance, g
 - webpack5
 - swc / swc-loader
 - esbuild / esbuild-loader
+- css modules
+- less
+- postcss
 
 ## Performance score
 
