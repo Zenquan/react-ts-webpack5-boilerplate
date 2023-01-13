@@ -2,9 +2,9 @@
 
 [English Doc](./README.md) · [中文文档](./README.zh-CN.md)
 
-Use react17, webpack5, axios, typescript to build templates, high performance, good compatibility, priority support for mobile terminals
+使用 react17、webpack5、axios、typescript 构建模板，高性能、兼容性好、优先支持移动端
 
-## Technology stack
+## 技术栈
 
 - react family
 - typescript
@@ -15,11 +15,11 @@ Use react17, webpack5, axios, typescript to build templates, high performance, g
 - less
 - postcss
 
-## Performance score
+## 性能评分
 
 ![lighthouse-pic](./docs/lighthouse-pic-20230113.jpg)
 
-## Technical solutions
+## 技术方案
 
 |      | compile | compress           | prebuild + single dev       |
 | ---- | ------- | ------------------ | --------------------------- |

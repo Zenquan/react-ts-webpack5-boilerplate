@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 // import useSWR from 'swr';
-import logo from '/@/assets/logo.svg';
+import logo from '@/assets/logo.svg';
 import style from './index.module.less';
 
 const Home: FC = () => {

@@ -6,11 +6,13 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const WebpackBar = require('webpackbar');
 const { isProd } = require('./utils');
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 
 const basePlugins = [
   new webpack.HotModuleReplacementPlugin(),
   new FriendlyErrorsPlugin(),
   new WebpackBar(),
+  new SpeedMeasurePlugin(),
 ];
 
 const devPlugins = [
@@ -27,23 +29,18 @@ const prodPlugins = [
     template: resolve('public/index.html'),
     env: 'production',
     minify: true,
-    vendor: resolve('lib/dll_react.js'),
-  }),
-  new webpack.DllReferencePlugin({
-    // 描述 react 动态链接库的文件内容
-    manifest: require(resolve('lib/react-mainfest.json')),
   }),
   new MiniCssExtractPlugin({
     filename: 'assets/css/[name].[contenthash:5].css',
     chunkFilename: 'assets/css/[name].[chunkhash:5].css',
   }),
-  new BundleAnalyzerPlugin({
-    analyzerMode: 'static',
-    openAnalyzer: false,
-  }),
+  // new BundleAnalyzerPlugin({
+  //   analyzerMode: 'static',
+  //   openAnalyzer: false,
+  // }),
 ];
 
-const plugins = isProd ? basePlugins.concat(prodPlugins) : basePlugins.concat(devPlugins);
+const plugins = basePlugins.concat(isProd ? prodPlugins : devPlugins);
 
 module.exports = {
   plugins,

@@ -1,6 +1,7 @@
 const { resolve, isProd } = require('./utils');
 const { loaders } = require('./loaders');
 const { plugins } = require('./plugins');
+const { optimization } = require('./optimization');
 const portfinder = require('portfinder');
 
 const baseConfig = {
@@ -8,30 +9,46 @@ const baseConfig = {
   output: {
     path: resolve('dist'),
     filename: 'assets/js/[name].[contenthash:5].js',
-    clean: true,
+    chunkFilename: 'assets/js/[name].[contenthash:5].js',
   },
   resolve: {
     extensions: ['.tsx', '.ts', '.css', 'less', '.jsx', '.js'],
     alias: {
       '/@': resolve('src'),
+      '@': resolve('src'),
     },
   },
-  plugins,
   module: {
     rules: loaders,
   },
+  plugins,
+  optimization,
   target: 'web',
+  cache: {
+    type: 'filesystem',
+    cacheDirectory: resolve('.dist_cache'),
+    store: 'pack',
+    buildDependencies: {
+      defaultWebpack: ['webpack/lib/'],
+      config: [__filename],
+    },
+  },
 };
 
-const devConfig = Object.assign(baseConfig, {
-  devtool: 'inline-source-map',
+const devConfig = {
+  ...baseConfig,
+  /**
+   * https://webpack.docschina.org/configuration/devtool/#root
+   * eval: 具有最高性能的开发构建的推荐选择 generated | build: fast rebuild: fastest
+   * eval-cheap-source-map: 开发构建的折衷选择 transformed | build: ok rebuild: fast
+   * eval-cheap-module-source-map: 开发构建的折衷选择 original lines | build: slow rebuild: fast
+   */
+  devtool: 'eval-cheap-module-source-map',
   output: {
-    filename: '[name].[hash].js',
+    filename: '[name].js',
   },
   devServer: {
-    contentBase: './dist',
-    host: '127.0.0.1',
-    port: process.env.PORT || 5000,
+    https: true,
     hot: true,
     proxy: {
       '/api': {
@@ -47,9 +64,10 @@ const devConfig = Object.assign(baseConfig, {
   watchOptions: {
     ignored: 'node_modules/**',
   },
-});
+};
 
-const prodConfig = Object.assign(baseConfig, {
+const prodConfig = {
+  ...baseConfig,
   /* CDN http://www.staticfile.org/
     https://cdnjs.com/
     https://www.jsdelivr.com/
@@ -61,41 +79,20 @@ const prodConfig = Object.assign(baseConfig, {
     //   'react-router-dom': 'ReactRouterDOM',
     // }
   ],
-  optimization: {
-    splitChunks: {
-      chunks: 'async',
-      minSize: 20000,
-      minRemainingSize: 0,
-      minChunks: 1,
-      maxAsyncRequests: 30,
-      maxInitialRequests: 30,
-      enforceSizeThreshold: 50000,
-      cacheGroups: {
-        defaultVendors: {
-          test: /[\\/]node_modules[\\/]/,
-          priority: -10,
-          reuseExistingChunk: true,
-        },
-        default: {
-          minChunks: 2,
-          priority: -20,
-          reuseExistingChunk: true,
-        },
-      },
-    },
-  },
-});
+};
 
 module.exports = new Promise((resolve, reject) => {
-  portfinder.getPort((err, port) => {
-    if (err) {
-      reject(err);
-      return;
-    }
+  isProd
+    ? resolve(prodConfig)
+    : portfinder.getPort((err, port) => {
+        if (err) {
+          reject(err);
+          return;
+        }
 
-    //端口被占用时就重新设置evn和devServer的端口
-    devConfig.devServer.port = process.env.PORT = port;
+        //端口被占用时就重新设置evn和devServer的端口
+        devConfig.devServer.port = process.env.PORT = port;
 
-    resolve(isProd ? prodConfig : devConfig);
-  });
+        resolve(devConfig);
+      });
 });

@@ -1,50 +1,21 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const { resolve } = require('./utils');
+const swcConfig = require('./.swcrc');
+const { isProd, resolve } = require('./utils');
+
+const cssLoader = {
+  loader: 'css-loader',
+  options: {
+    importLoaders: 1,
+    modules: {
+      mode: 'local',
+      auto: true,
+      exportGlobals: true,
+      localIdentName: '[local]--[hash:base64:5]',
+    },
+  },
+};
 
 const loaders = [
-  {
-    test: /\.(js|jsx)$/,
-    use: [
-      'cache-loader',
-      {
-        loader: 'thread-loader',
-        options: {
-          // the number of spawned workers, defaults to (number of cpus - 1) or
-          // fallback to 1 when require('os').cpus() is undefined
-          workers: 4,
-
-          // number of jobs a worker processes in parallel
-          // defaults to 20
-          workerParallelJobs: 50,
-
-          // additional node.js arguments
-          workerNodeArgs: ['--max-old-space-size=1024'],
-
-          // Allow to respawn a dead worker pool
-          // respawning slows down the entire compilation
-          // and should be set to false for development
-          poolRespawn: false,
-
-          // timeout for killing the worker processes when idle
-          // defaults to 500 (ms)
-          // can be set to Infinity for watching builds to keep workers alive
-          poolTimeout: 2000,
-
-          // number of jobs the poll distributes to the workers
-          // defaults to 200
-          // decrease of less efficient but more fair distribution
-          poolParallelJobs: 50,
-
-          // name of the pool
-          // can be used to create different pools with elsewise identical options
-          name: 'my-pool',
-        },
-      },
-      'babel-loader',
-    ],
-    exclude: /node_modules/,
-    include: [resolve('src')],
-  },
   {
     test: /\.css$/,
     use: [
@@ -61,21 +32,11 @@ const loaders = [
   },
   {
     test: /\.css$/,
-    use: [
-      MiniCssExtractPlugin.loader,
-      {
-        loader: 'css-loader',
-        options: {
-          importLoaders: 1,
-          modules: true,
-        },
-      },
-      'postcss-loader',
-    ],
+    use: [MiniCssExtractPlugin.loader, cssLoader, 'postcss-loader'],
     include: /\.module\.css$/,
   },
   {
-    test: /\.(png|jpeg|jpg|bmp|gif)$/,
+    test: /\.(png|jpeg|jpg|bmp|gif|svg)$/,
     use: [
       {
         loader: 'url-loader',
@@ -93,7 +54,7 @@ const loaders = [
       {
         loader: 'url-loader',
         options: {
-          limit: 10 * 1024,
+          limit: 200 * 1024,
           name: '[name].[contenthash:8].[ext]',
           outputPath: 'assets/fonts',
         },
@@ -109,55 +70,55 @@ const loaders = [
     },
   },
   {
-    test: /\.svg$/,
-    use: 'file-loader',
+    test: /\.less$/,
+    use: [MiniCssExtractPlugin.loader, cssLoader, 'less-loader'],
   },
   {
-    test: /\.ts(x)?$/,
+    test: /\.(js|jsx|ts|tsx)$/,
     use: [
       'cache-loader',
-      // {
-      //   loader: 'thread-loader',
-      //   options: {
-      //     // the number of spawned workers, defaults to (number of cpus - 1) or
-      //     // fallback to 1 when require('os').cpus() is undefined
-      //     workers: 2,
+      {
+        loader: 'thread-loader',
+        // 有同样配置的 loader 会共享一个 worker 池
+        options: {
+          // 产生的 worker 的数量，默认是 (cpu 核心数 - 1)，或者，
+          // 在 require('os').cpus() 是 undefined 时回退至 1
+          workers: require('os').cpus(),
 
-      //     // number of jobs a worker processes in parallel
-      //     // defaults to 20
-      //     workerParallelJobs: 50,
+          // 一个 worker 进程中并行执行工作的数量
+          // 默认为 20
+          workerParallelJobs: 50,
 
-      //     // additional node.js arguments
-      //     workerNodeArgs: ['--max-old-space-size=1024'],
+          // 额外的 node.js 参数
+          workerNodeArgs: ['--max-old-space-size=1024'],
 
-      //     // Allow to respawn a dead worker pool
-      //     // respawning slows down the entire compilation
-      //     // and should be set to false for development
-      //     poolRespawn: false,
+          // 允许重新生成一个僵死的 work 池
+          // 这个过程会降低整体编译速度
+          // 并且开发环境应该设置为 false
+          poolRespawn: false,
 
-      //     // timeout for killing the worker processes when idle
-      //     // defaults to 500 (ms)
-      //     // can be set to Infinity for watching builds to keep workers alive
-      //     poolTimeout: 2000,
+          // 闲置时定时删除 worker 进程
+          // 默认为 500（ms）
+          // 可以设置为无穷大，这样在监视模式(--watch)下可以保持 worker 持续存在
+          poolTimeout: 2000,
 
-      //     // number of jobs the poll distributes to the workers
-      //     // defaults to 200
-      //     // decrease of less efficient but more fair distribution
-      //     poolParallelJobs: 50,
+          // 池分配给 worker 的工作数量
+          // 默认为 200
+          // 降低这个数值会降低总体的效率，但是会提升工作分布更均一
+          poolParallelJobs: 50,
 
-      //     // name of the pool
-      //     // can be used to create different pools with elsewise identical options
-      //     name: 'my-pool',
-      //   },
-      // },
-      'ts-loader',
+          // 池的名称
+          // 可以修改名称来创建其余选项都一样的池
+          name: 'my-pool',
+        },
+      },
+      {
+        loader: 'swc-loader',
+        options: swcConfig(!isProd),
+      },
     ],
     exclude: /node_modules/,
     include: [resolve('src')],
-  },
-  {
-    test: /\.less$/,
-    use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
   },
 ];
 
